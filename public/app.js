@@ -2,6 +2,7 @@
 const API_SAVE = "./app/save.php";
 const API_LIST = "./app/list.php";
 const API_EXPORT = "./app/export_excel.php";
+const API_DELETE = "./app/delete.php";
 
 function formatError(res) {
   return `${res.status} ${res.statusText}`;
@@ -135,5 +136,33 @@ btnExport.addEventListener("click", async () => {
   // export otomatis: browser akan download file dari PHP
   window.location.href = API_EXPORT;
 });
+
+const btnDelete = document.getElementById("btnDelete");
+if (btnDelete) {
+  btnDelete.addEventListener("click", async () => {
+    const ok = window.confirm("Yakin mau hapus semua data?");
+    if (!ok) return;
+
+    try {
+      setStatus("Menghapus...", "");
+      const res = await fetch(API_DELETE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirm: true }),
+      });
+
+      const out = await res.json().catch(() => null);
+      if (!res.ok) {
+        setStatus(out?.error || "Gagal menghapus", "err");
+        return;
+      }
+
+      setStatus("Data dihapus.", "ok");
+      await loadList();
+    } catch (e) {
+      setStatus("Gagal konek ke server.", "err");
+    }
+  });
+}
 
 loadList();

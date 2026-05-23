@@ -1,97 +1,128 @@
 <!doctype html>
 <html lang="id">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Data Teknisi Bulanan</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <main class="container">
-    <header class="header">
-      <h1>Data Teknisi Bulanan</h1>
-      <p class="sub">Input data per bulan (tanpa database, tersimpan ke JSON)</p>
-    </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Teknisi Bulanan</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Data Teknisi Bulanan</h1>
+        <p class="sub">
+          Input data per bulan (tanpa database, tersimpan ke JSON)
+        </p>
+      </header>
 
-    <section class="card">
-      <form id="formTambah" autocomplete="off">
-        <div class="grid">
-          <div class="field">
-            <label>Nama Teknisi (optional)</label>
-            <input name="nama_teknisi" placeholder="Contoh: Budi" />
+      <section class="card">
+        <form id="formTambah" autocomplete="off">
+          <div class="grid">
+            <div class="field">
+              <label>Nama Teknisi (optional)</label>
+              <input name="nama_teknisi" placeholder="Contoh: Budi" />
+            </div>
+
+            <div class="field">
+              <label>Nama Customer (optional)</label>
+              <input name="nama_customer" placeholder="Contoh: PT Maju" />
+            </div>
+
+            <div class="field">
+              <label>Alamat (optional)</label>
+              <input name="alamat" placeholder="Contoh: Jakarta" />
+            </div>
+
+            <div class="field">
+              <label>Titik Lokasi</label>
+              <input
+                name="titik_lokasi"
+                required
+                placeholder="Contoh: Gudang A"
+              />
+            </div>
+
+            <div class="field">
+              <label>Harga</label>
+              <input
+                name="harga"
+                required
+                inputmode="decimal"
+                placeholder="Contoh: 250000"
+              />
+            </div>
+
+            <div class="field">
+              <label>Partner</label>
+              <input
+                name="partner"
+                required
+                placeholder="Contoh: Partner XYZ"
+              />
+            </div>
+
+            <div class="field">
+              <label>Proyek</label>
+              <input name="proyek" required placeholder="Contoh: Proyek 2026" />
+            </div>
+
+            <div class="field">
+              <label>Kegiatan</label>
+              <input
+                name="kegiatan"
+                required
+                placeholder="Contoh: Maintenance"
+              />
+            </div>
           </div>
 
-          <div class="field">
-            <label>Nama Customer (optional)</label>
-            <input name="nama_customer" placeholder="Contoh: PT Maju" />
+          <div class="actions">
+            <button class="btn primary" type="submit">Tambah Data</button>
+            <button class="btn" id="btnExport" type="button">
+              Export Excel
+            </button>
+            <button class="btn danger" id="btnDelete" type="button">
+              Hapus Semua
+            </button>
           </div>
 
-          <div class="field">
-            <label>Alamat (optional)</label>
-            <input name="alamat" placeholder="Contoh: Jakarta" />
-          </div>
+          <div
+            class="status"
+            id="status"
+            role="status"
+            aria-live="polite"
+          ></div>
+        </form>
+      </section>
 
-          <div class="field">
-            <label>Titik Lokasi</label>
-            <input name="titik_lokasi" required placeholder="Contoh: Gudang A" />
-          </div>
-
-          <div class="field">
-            <label>Harga</label>
-            <input name="harga" required inputmode="decimal" placeholder="Contoh: 250000" />
-          </div>
-
-          <div class="field">
-            <label>Partner</label>
-            <input name="partner" required placeholder="Contoh: Partner XYZ" />
-          </div>
-
-          <div class="field">
-            <label>Proyek</label>
-            <input name="proyek" required placeholder="Contoh: Proyek 2026" />
-          </div>
-
-          <div class="field">
-            <label>Kegiatan</label>
-            <input name="kegiatan" required placeholder="Contoh: Maintenance" />
-          </div>
+      <section class="card small">
+        <h2>Data Tersimpan</h2>
+        <div class="hint">
+          Untuk HP, scroll saja. Export Excel akan mengambil seluruh data dari
+          file JSON.
         </div>
-
-        <div class="actions">
-          <button class="btn primary" type="submit">Tambah Data</button>
-          <button class="btn" id="btnExport" type="button">Export Excel</button>
+        <div class="tableWrap">
+          <table class="table" aria-label="Daftar data">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Teknisi</th>
+                <th>Customer</th>
+                <th>Titik Lokasi</th>
+                <th>Harga</th>
+                <th>Partner</th>
+                <th>Proyek</th>
+                <th>Kegiatan</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <!-- diisi JS -->
+            </tbody>
+          </table>
         </div>
+      </section>
+    </main>
 
-        <div class="status" id="status" role="status" aria-live="polite"></div>
-      </form>
-    </section>
-
-    <section class="card small">
-      <h2>Data Tersimpan</h2>
-      <div class="hint">Untuk HP, scroll saja. Export Excel akan mengambil seluruh data dari file JSON.</div>
-      <div class="tableWrap">
-        <table class="table" aria-label="Daftar data">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Teknisi</th>
-              <th>Customer</th>
-              <th>Titik Lokasi</th>
-              <th>Harga</th>
-              <th>Partner</th>
-              <th>Proyek</th>
-              <th>Kegiatan</th>
-            </tr>
-          </thead>
-          <tbody id="tbody">
-            <!-- diisi JS -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <script src="app.js"></script>
-</body>
+    <script src="app.js"></script>
+  </body>
 </html>
-
