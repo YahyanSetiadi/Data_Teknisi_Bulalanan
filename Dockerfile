@@ -1,31 +1,15 @@
 FROM php:8.2-apache
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    libpq-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
-
-# Enable Apache mod_rewrite
+# 1. Aktifkan modul rewrite Apache (penting untuk routing)
 RUN a2enmod rewrite
 
-# Copy project files
-WORKDIR /var/www/html
-COPY . .
+# 2. Copy semua file project ke folder root server Apache
+COPY . /var/www/html/
 
-# Set Apache document root to /public if it exists
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN if [ -d "/var/www/html/public" ]; then \
-      sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf && \
-      sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf ; \
-    fi
+# 3. Berikan izin akses baca-tulis penuh agar file JSON bisa dimuat/ditulis
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
 
-EXPOSE 80
+# 4. Pastikan Apache mengizinkan pembacaan file .htaccess untuk routing jika ada
+RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
