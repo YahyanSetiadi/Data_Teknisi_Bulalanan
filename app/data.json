@@ -1,0 +1,26 @@
+[
+    {
+        "nama_teknisi": "budi",
+        "nama_customer": "pt maju",
+        "alamat": "jakarta",
+        "titik_lokasi": "gudang",
+        "harga_disp": "30000",
+        "harga": 30000,
+        "partner": "partner 2023",
+        "proyek": "proyek 2026",
+        "kegiatan": "maintenent",
+        "created_at": "2026-05-23T12:47:49+00:00"
+    },
+    {
+        "nama_teknisi": "bambang",
+        "nama_customer": "pt ini",
+        "alamat": "depok",
+        "titik_lokasi": "gudang 2",
+        "harga_disp": "80000",
+        "harga": 80000,
+        "partner": "XYZ",
+        "proyek": "proyek 2026",
+        "kegiatan": "makan",
+        "created_at": "2026-05-23T12:48:26+00:00"
+    }
+]
