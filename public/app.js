@@ -1,7 +1,7 @@
-// Pakai path berbasis root agar tetap valid di Render (biasanya App berada di /app/*.php)
-const API_SAVE = "/app/save.php";
-const API_LIST = "/app/list.php";
-const API_EXPORT = "/app/export_excel.php";
+// endpoints ada di dalam public/app agar tidak 404 di Render
+const API_SAVE = "./app/save.php";
+const API_LIST = "./app/list.php";
+const API_EXPORT = "./app/export_excel.php";
 
 function formatError(res) {
   return `${res.status} ${res.statusText}`;
