@@ -5,15 +5,13 @@ header('Content-Type: application/json; charset=utf-8');
 
 $storageDir = __DIR__ . '/storage';
 if (!is_dir($storageDir)) {
-  http_response_code(500);
-  echo json_encode([]);
-  exit;
+  @mkdir($storageDir, 0777, true);
 }
 $file = $storageDir . '/data.json';
 if (!file_exists($file)) {
-  echo json_encode([]);
-  exit;
+  @file_put_contents($file, '[]');
 }
+
 
 $raw = file_get_contents($file);
 

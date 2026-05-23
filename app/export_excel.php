@@ -5,10 +5,17 @@ declare(strict_types=1);
 // Untuk kompatibilitas, kita output tabel gaya Excel 2003.
 
 $storageDir = __DIR__ . '/storage';
+if (!is_dir($storageDir)) {
+  @mkdir($storageDir, 0777, true);
+}
 $file = $storageDir . '/data.json';
 $data = [];
+if (!file_exists($file)) {
+  @file_put_contents($file, '[]');
+}
 if (file_exists($file)) {
   $raw = file_get_contents($file);
+
 
   $tmp = json_decode($raw, true);
   if (is_array($tmp)) $data = $tmp;

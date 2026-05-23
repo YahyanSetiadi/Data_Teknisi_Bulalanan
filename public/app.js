@@ -1,6 +1,11 @@
-const API_SAVE = "../app/save.php";
-const API_LIST = "../app/list.php";
-const API_EXPORT = "../app/export_excel.php";
+// Pakai path berbasis root agar tetap valid di Render (biasanya App berada di /app/*.php)
+const API_SAVE = "/app/save.php";
+const API_LIST = "/app/list.php";
+const API_EXPORT = "/app/export_excel.php";
+
+function formatError(res) {
+  return `${res.status} ${res.statusText}`;
+}
 
 const form = document.getElementById("formTambah");
 const statusEl = document.getElementById("status");
@@ -30,7 +35,8 @@ async function loadList() {
     const data = await res.json();
     renderTable(Array.isArray(data) ? data : []);
   } catch (e) {
-    setStatus("Tidak bisa memuat data. Cek server.", "err");
+    const msg = e && e.message ? e.message : String(e);
+    setStatus("Tidak bisa memuat data. " + msg, "err");
   }
 }
 
