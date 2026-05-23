@@ -9,3 +9,4 @@
 - [x] Pastikan tombol Export mengunduh `.xls`
 
 - [ ] Tes alur end-to-end (tambah data -> tersimpan -> export)
+- [ ] Buat Dockerfile & docker-compose
