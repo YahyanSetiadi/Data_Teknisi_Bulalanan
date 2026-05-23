@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 // Export Excel tanpa library: SpreadsheetML (.xls yang bisa dibuka Excel)
 
-$storageDir = __DIR__ . '/../storage';
+$storageDir = __DIR__ . '/storage';
 if (!is_dir($storageDir)) {
   @mkdir($storageDir, 0777, true);
 }
+
 
 $file = $storageDir . '/data.json';
 if (!file_exists($file)) {
