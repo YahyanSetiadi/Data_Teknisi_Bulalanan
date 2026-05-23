@@ -4,10 +4,12 @@ declare(strict_types=1);
 // Export Excel tanpa library: pakai SpreadsheetML (Excel bisa buka file .xls)
 // Untuk kompatibilitas, kita output tabel gaya Excel 2003.
 
-$file = __DIR__ . '/data.json';
+$storageDir = __DIR__ . '/storage';
+$file = $storageDir . '/data.json';
 $data = [];
 if (file_exists($file)) {
   $raw = file_get_contents($file);
+
   $tmp = json_decode($raw, true);
   if (is_array($tmp)) $data = $tmp;
 }
@@ -42,8 +44,10 @@ foreach (array_reverse($data) as $row) {
   $rows .= '<Cell><Data ss:Type="Number">' . $no . '</Data></Cell>';
   $rows .= cell($row['nama_teknisi'] ?? '');
   $rows .= cell($row['nama_customer'] ?? '');
-  $rows .= cell($row['alamat'] ?? '');
-  $rows .= cell($row['titik_lokasi'] ?? '');;
+$rows .= cell($row['alamat'] ?? '');
+  $rows .= cell($row['titik_lokasi'] ?? '');
+
+
   $rows .= priceCell($row['harga'] ?? ($row['harga_disp'] ?? ''));
   $rows .= cell($row['partner'] ?? '');
   $rows .= cell($row['proyek'] ?? '');

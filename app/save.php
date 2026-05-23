@@ -50,10 +50,19 @@ if ($dataRow['harga'] === null) {
   exit;
 }
 
-$file = __DIR__ . '/data.json';
-if (!file_exists($file)) {
-  file_put_contents($file, '[]');
+$storageDir = __DIR__ . '/storage';
+if (!is_dir($storageDir)) {
+  @mkdir($storageDir, 0777, true);
 }
+
+// Pastikan data.json ada agar operasi file tidak gagal di environment yang membatasi write.
+
+
+$file = $storageDir . '/data.json';
+if (!file_exists($file)) {
+  @file_put_contents($file, '[]');
+}
+
 
 $fp = fopen($file, 'c+');
 if (!$fp) {
